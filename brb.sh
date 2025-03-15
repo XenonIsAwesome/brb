@@ -98,6 +98,10 @@ options:
 
 # Check if the script is already sourced in .bashrc
 if ! grep -q "source $SCRIPT_PATH" ~/.bashrc; then
-    echo "source $SCRIPT_PATH" >> ~/.bashrc
+    pushd $HOME
+    git clone https://github.com/XenonIsAwesome/brb.git .brb
+    popd
+    
+    echo "source $HOME/.brb/brb.sh" >> ~/.bashrc
     echo "Restart your terminal or run 'source ~/.bashrc' to apply changes."
 fi
