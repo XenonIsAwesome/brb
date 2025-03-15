@@ -41,7 +41,7 @@ function brb() {
                 ;;
             --registry)
                 registry_url="$2";
-                if [ -z $registry_url ];
+                if [ -z $registry_url ]; then
                     echo "Error: --registry requires a registry specified.";
                     return 1;
                 fi
