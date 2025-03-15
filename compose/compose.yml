@@ -1,0 +1,60 @@
+services:
+  cmake:
+    image: "cmake:${CMake_VER:-3.31.6}"
+    build:
+      args: 
+        CMake_VER: ${CMake_VER:-3.31.6}
+      context: ..
+      dockerfile: images/builders/CMake.Dockerfile
+  
+  boost:
+    image: "boost:${Boost_VER:-1.87.0}"
+    build:
+      args: 
+        Boost_VER: ${Boost_VER:-1.87.0}
+      context: ..
+      dockerfile: images/builders/Boost.Dockerfile
+    depends_on:
+      - cmake
+  
+  uhd-builder:
+    image: "uhd-builder:${UHD_VER:-4.8.0.0}"
+    build:
+      args: 
+        UHD_VER: ${UHD_VER:-4.8.0.0}
+      context: ..
+      dockerfile: images/builders/UHD.Dockerfile
+    depends_on:
+      - cmake
+      - boost
+  
+  ipp:
+    image: "ipp:${IPP_VER:-2022.0.0.809}"
+    build:
+      args: 
+        IPP_VER: ${IPP_VER:-2022.0.0.809}
+      context: ..
+      dockerfile: images/builders/IPP.Dockerfile
+
+  mq:
+    image: "mq:${MQ_C_VER:-master}_${AMPQ_VER:-master}"
+    build:
+      args: 
+        MQ_C_VER: ${MQ_C_VER:-master}
+        AMPQ_VER: ${AMPQ_VER:-master}
+      context: ..
+      dockerfile: images/builders/MQ.Dockerfile
+    depends_on:
+      - cmake
+      - boost
+
+  cuda:
+    image: "cuda:${CUDA_VER:-12.8.1}_${CUDA_Driver_VER:-570.124.06}"
+    build:
+      args: 
+        CUDA_VER: ${CUDA_VER:-12.8.1}
+        CUDA_Driver_VER: ${CUDA_Driver_VER:-570.124.06}
+      context: ..
+      dockerfile: images/builders/CUDA.Dockerfile
+    depends_on:
+      - cmake

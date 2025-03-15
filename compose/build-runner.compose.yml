@@ -1,0 +1,15 @@
+services:
+  build-runner:
+    image: "build-runner:${BuildRunner_VER:-latest}"
+    build:
+      args: 
+        BuildRunner_VER: ${BuildRunner_VER:-latest}
+      context: ..
+      dockerfile: images/targets/BuildRunner.Dockerfile
+    depends_on:
+      - cmake
+      - boost
+      - uhd-builder
+      - ipp
+      - cuda
+      - mq
