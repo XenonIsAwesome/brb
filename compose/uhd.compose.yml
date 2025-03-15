@@ -1,6 +1,6 @@
 services:
   uhd:
-    image: "uhd:${UHD_VER:-4.8.0.0}"
+    image: "${REGISTRY_URL}uhd:${UHD_VER:-4.8.0.0}"
     build:
       args: 
         UHD_VER: ${UHD_VER:-4.8.0.0}

@@ -6,7 +6,7 @@ curl https://raw.githubusercontent.com/XenonIsAwesome/brb/refs/heads/main/brb.sh
 
 # Usage
 ```bash
-usage: brb [-v VERSIONS] [--push] [--no-depends] {uhd,build-runner}
+usage: brb [-v VERSIONS] [--push] [--no-depends] [--registry] {uhd,build-runner}
 
 positional arguments:
   {build-runner/uhd}    The name of the target you want built.

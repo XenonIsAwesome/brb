@@ -11,9 +11,10 @@ function brb() {
     # Initialize variables for parsing
     target_name=""
     declare -A versions  # Associative array to store key-value pairs
-    push_str=""          # Default value for --push
-    nocache_str=""       # Default value for --no-cache
+    push_str=""
+    nocache_str=""
     nodepends_str=" --with-dependencies"
+    registry_url=""
 
     # Parse arguments
     while [[ $# -gt 0 ]]; do
@@ -38,6 +39,18 @@ function brb() {
             --no-depends)
                 nodepends_str=""
                 ;;
+            --registry)
+                registry_url="$2";
+                if [ -z $registry_url ];
+                    echo "Error: --registry requires a registry specified.";
+                    return 1;
+                fi
+
+                if [ ! $registry_url == */ ]; then
+                    registry_url="${registry_url}/"
+                fi
+                shift
+                ;;
             *)
                 if [[ -z "$target_name" ]]; then
                     target_name="$1"
@@ -56,7 +69,7 @@ function brb() {
         popd >/dev/null
 
         echo """
-usage: brb [-v VERSIONS] [--push] [--no-depends] {uhd,build-runner}
+usage: brb [-v VERSIONS] [--push] [--no-depends] [--registry] {uhd,build-runner}
 
 positional arguments:
   {$output}    The name of the target you want built.
@@ -89,6 +102,9 @@ options:
     for key in "${!versions[@]}"; do
         echo "${key}_VER=\"${versions[$key]}\"" >> .env
     done
+    if [ -n $registry_url ]; then
+        echo "REGISTRY_URL=${registry_url}" >> .env
+    fi
 
     docker compose --env-file .env -f compose/compose.yml -f compose/$target_name.compose.yml build${nodepends_str} ${target_name}${push_str}${nocache_str}
     docker rmi $(docker images --filter dangling=true -aq) >/dev/null 2>/dev/null
