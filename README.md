@@ -29,3 +29,10 @@ options:
   --push                Push images to registry.
   --no-depends          Build without dependencies.
 ```
+
+## Examples
+
+```bash
+brb uhd -v UHD=4.7.0.0
+brb build-runner --no-depends -v BuildRunner=jammy --push
+```
