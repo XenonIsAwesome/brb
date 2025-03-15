@@ -6,12 +6,14 @@ curl https://raw.githubusercontent.com/XenonIsAwesome/brb/refs/heads/main/brb.sh
 
 # Usage
 ```bash
-usage: brb [-v VERSIONS] [--push] [--no-depends] [--registry] {uhd,build-runner}
+usage: brb [-h] {uhd,build-runner} [-v VERSIONS] [--push] [--no-depends] [--registry]
 
 positional arguments:
-  {build-runner/uhd}    The name of the target you want built.
+  {$output}    The name of the target you want built.
 
 options:
+  -h, --help            Shows this help message.
+
   -v VERSIONS, --version VERSIONS 
                         A version for a specific dependancy in a KEY=VALUE format.
                         KEYS = IPP
