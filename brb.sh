@@ -1,8 +1,10 @@
 #!/bin/bash
 
 # Consts
-SCRIPT_PATH="$(realpath "${BASH_SOURCE[0]}")"
-SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+if [ -n "${BASH_SOURCE[0]}" ]; then
+    SCRIPT_PATH="$(realpath "${BASH_SOURCE[0]}")"
+    SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+fi
 
 # Function to handle brb logic
 function brb() {
@@ -101,7 +103,7 @@ if ! grep -q "source $SCRIPT_PATH" ~/.bashrc; then
     pushd $HOME
     git clone https://github.com/XenonIsAwesome/brb.git .brb
     popd
-    
+
     echo "source $HOME/.brb/brb.sh" >> ~/.bashrc
     echo "Restart your terminal or run 'source ~/.bashrc' to apply changes."
 fi
