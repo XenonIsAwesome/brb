@@ -34,5 +34,7 @@ options:
 
 ```bash
 brb uhd -v UHD=4.7.0.0
+```
+```bash
 brb build-runner --no-depends -v BuildRunner=jammy --push
 ```
