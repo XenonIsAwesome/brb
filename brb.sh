@@ -46,7 +46,7 @@ function brb() {
                     return 1;
                 fi
 
-                if [ ! $registry_url == */ ]; then
+                if [[ ! "$registry_url" =~ /$ ]]; then
                     registry_url="${registry_url}/"
                 fi
                 shift

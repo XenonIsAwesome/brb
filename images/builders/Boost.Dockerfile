@@ -1,5 +1,6 @@
+ARG REGISTRY_URL=""
 ARG CMake_VER=3.31.6
-FROM cmake:${CMake_VER}
+FROM ${REGISTRY_URL}cmake:${CMake_VER}
 
 ARG Boost_VER=1.87.0
 ARG Boost_UNDERLINE_VER=${Boost_VER//./_}

@@ -3,6 +3,7 @@ services:
     image: "${REGISTRY_URL}cmake:${CMake_VER:-3.31.6}"
     build:
       args: 
+        REGISTRY_URL: ${REGISTRY_URL}
         CMake_VER: ${CMake_VER:-3.31.6}
       context: ..
       dockerfile: images/builders/CMake.Dockerfile
@@ -11,6 +12,7 @@ services:
     image: "${REGISTRY_URL}boost:${Boost_VER:-1.87.0}"
     build:
       args: 
+        REGISTRY_URL: ${REGISTRY_URL}
         Boost_VER: ${Boost_VER:-1.87.0}
       context: ..
       dockerfile: images/builders/Boost.Dockerfile
@@ -20,7 +22,8 @@ services:
   uhd-builder:
     image: "${REGISTRY_URL}uhd-builder:${UHD_VER:-4.8.0.0}"
     build:
-      args: 
+      args:
+        REGISTRY_URL: ${REGISTRY_URL} 
         UHD_VER: ${UHD_VER:-4.8.0.0}
       context: ..
       dockerfile: images/builders/UHD.Dockerfile
@@ -32,6 +35,7 @@ services:
     image: "${REGISTRY_URL}ipp:${IPP_VER:-2022.0.0.809}"
     build:
       args: 
+        REGISTRY_URL: ${REGISTRY_URL}
         IPP_VER: ${IPP_VER:-2022.0.0.809}
       context: ..
       dockerfile: images/builders/IPP.Dockerfile
@@ -40,6 +44,7 @@ services:
     image: "${REGISTRY_URL}mq:${MQ_C_VER:-master}_${AMPQ_VER:-master}"
     build:
       args: 
+        REGISTRY_URL: ${REGISTRY_URL}
         MQ_C_VER: ${MQ_C_VER:-master}
         AMPQ_VER: ${AMPQ_VER:-master}
       context: ..
@@ -52,6 +57,7 @@ services:
     image: "${REGISTRY_URL}cuda:${CUDA_VER:-12.8.1}_${CUDA_Driver_VER:-570.124.06}"
     build:
       args: 
+        REGISTRY_URL: ${REGISTRY_URL}
         CUDA_VER: ${CUDA_VER:-12.8.1}
         CUDA_Driver_VER: ${CUDA_Driver_VER:-570.124.06}
       context: ..

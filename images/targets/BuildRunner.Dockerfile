@@ -1,3 +1,4 @@
+ARG REGISTRY_URL=""
 ARG Boost_VER=1.87.0
 ARG UHD_VER=4.8.0.0
 ARG MQ_C_VER=master
@@ -7,13 +8,13 @@ ARG CUDA_RT_VER=12.8.1
 ARG CUDA_DRIVER_VER=570.124.06
 ARG CMake_VER=3.31.6
 
-FROM boost:${Boost_VER} AS boost_env
-FROM uhd-builder:${UHD_VER} AS uhd_builder_env
-FROM mq:${MQ_C_VER}_${AMPQ_VER} AS mq_env
-FROM ipp:${IPP_VER} AS ipp_env
-FROM cuda:${CUDA_RT_VER}_${CUDA_DRIVER_VER} AS cuda_env
+FROM ${REGISTRY_URL}boost:${Boost_VER} AS boost_env
+FROM ${REGISTRY_URL}uhd-builder:${UHD_VER} AS uhd_builder_env
+FROM ${REGISTRY_URL}mq:${MQ_C_VER}_${AMPQ_VER} AS mq_env
+FROM ${REGISTRY_URL}ipp:${IPP_VER} AS ipp_env
+FROM ${REGISTRY_URL}cuda:${CUDA_RT_VER}_${CUDA_DRIVER_VER} AS cuda_env
 
-FROM cmake:${CMake_VER}
+FROM ${REGISTRY_URL}cmake:${CMake_VER}
 
 # LibBoost
 COPY --from=boost_env /usr/local/lib/libboost* /usr/local/lib/

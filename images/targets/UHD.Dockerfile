@@ -1,6 +1,6 @@
-
+ARG REGISTRY_URL=""
 ARG UHD_VER=4.8.0.0
-FROM uhd-builder:${UHD_VER} AS uhd_builder_env
+FROM ${REGISTRY_URL}uhd-builder:${UHD_VER} AS uhd_builder_env
 
 FROM ubuntu:latest
 

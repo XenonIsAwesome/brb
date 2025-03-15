@@ -3,6 +3,7 @@ services:
     image: "${REGISTRY_URL}build-runner:${BuildRunner_VER:-latest}"
     build:
       args: 
+        REGISTRY_URL: ${REGISTRY_URL}
         BuildRunner_VER: ${BuildRunner_VER:-latest}
       context: ..
       dockerfile: images/targets/BuildRunner.Dockerfile

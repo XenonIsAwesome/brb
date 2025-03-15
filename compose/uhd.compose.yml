@@ -3,6 +3,7 @@ services:
     image: "${REGISTRY_URL}uhd:${UHD_VER:-4.8.0.0}"
     build:
       args: 
+        REGISTRY_URL: ${REGISTRY_URL}
         UHD_VER: ${UHD_VER:-4.8.0.0}
       context: ..
       dockerfile: images/targets/UHD.Dockerfile

@@ -1,5 +1,6 @@
+ARG REGISTRY_URL=""
 ARG Boost_VER=1.87.0
-FROM boost:${Boost_VER}
+FROM ${REGISTRY_URL}boost:${Boost_VER}
 
 ARG UHD_VER=4.8.0.0
 
