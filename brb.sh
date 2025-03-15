@@ -6,6 +6,39 @@ if [ -n "${BASH_SOURCE[0]}" ]; then
     SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
 fi
 
+function brb-help() {
+    pushd $SCRIPT_DIR/compose/ >/dev/null
+    output=$(ls *.compose.yml 2>/dev/null | sed 's/\.compose\.yml$//' | paste -sd '/')
+    popd >/dev/null
+
+    echo """
+usage: brb [-h] {uhd,build-runner} [-v VERSIONS] [--push] [--no-depends] [--registry]
+
+positional arguments:
+  {$output}    The name of the target you want built.
+
+options:
+  -h, --help            Shows this help message.
+
+  -v VERSIONS, --version VERSIONS 
+                        A version for a specific dependancy in a KEY=VALUE format.
+                        KEYS = IPP
+                               CMake
+                               CUDA
+                               CUDA_Driver
+                               Boost
+                               MQ_C
+                               AMPQ
+                               UHDBuilder
+                               UHD
+                               BuildRunner
+
+  --registry            Registry to push to.
+  --push                Push images to registry.
+  --no-depends          Build without dependencies.
+"""
+}
+
 # Function to handle brb logic
 function brb() {
     # Initialize variables for parsing
@@ -29,6 +62,10 @@ function brb() {
                     echo "Error: -v option requires an argument in the format KEY=VALUE."
                     return 1
                 fi
+                ;;
+            -h|--help)
+                brb-help;
+                return 0;
                 ;;
             --push)
                 push_str=" --push"
@@ -64,34 +101,7 @@ function brb() {
     done
 
     if [ -z "$target_name" ]; then
-        pushd $SCRIPT_DIR/compose/ >/dev/null
-        output=$(ls *.compose.yml 2>/dev/null | sed 's/\.compose\.yml$//' | paste -sd '/')
-        popd >/dev/null
-
-        echo """
-usage: brb [-v VERSIONS] [--push] [--no-depends] [--registry] {uhd,build-runner}
-
-positional arguments:
-  {$output}    The name of the target you want built.
-
-options:
-  -v VERSIONS, --version VERSIONS 
-                        A version for a specific dependancy in a KEY=VALUE format.
-                        KEYS = IPP
-                               CMake
-                               CUDA
-                               CUDA_Driver
-                               Boost
-                               MQ_C
-                               AMPQ
-                               UHDBuilder
-                               UHD
-                               BuildRunner
-
-  --registry            Registry to push to.
-  --push                Push images to registry.
-  --no-depends          Build without dependencies.
-"""
+        brb-help;
         return 1
     fi
 
@@ -119,6 +129,6 @@ if [ ! -d "$HOME/.brb/" ]; then
     pushd $HOME
     git clone https://github.com/XenonIsAwesome/brb.git .brb >/dev/null
     echo "source $HOME/.brb/brb.sh" >> .bashrc
-    source .bashrc
+    source $HOME/.brb/brb.sh
     popd
 fi
