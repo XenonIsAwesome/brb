@@ -118,8 +118,7 @@ options:
 if [ ! -d "$HOME/.brb/" ]; then
     pushd $HOME
     git clone https://github.com/XenonIsAwesome/brb.git .brb >/dev/null
+    echo "source $HOME/.brb/brb.sh" >> .bashrc
+    source .bashrc
     popd
-
-    echo "source $HOME/.brb/brb.sh" >> ~/.bashrc
-    source ~/.bashrc
 fi
